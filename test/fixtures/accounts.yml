@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  balance: 9.99
+  precision: MyString
+  15: MyString
+  scale: MyString
+  2: MyString
+  default: MyString
+  0.0: MyString
+
+two:
+  user: two
+  balance: 9.99
+  precision: MyString
+  15: MyString
+  scale: MyString
+  2: MyString
+  default: MyString
+  0.0: MyString

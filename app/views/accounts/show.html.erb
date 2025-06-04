@@ -1,0 +1,73 @@
+<h1>My Account</h1>
+<p>Name: <%= @account.user.name %></p>
+<p>Email: <%= @account.user.email %></p>
+<p>Balance: <%= number_to_currency(@account.balance) %></p>
+
+<h2>Deposit Funds</h2>
+<%= form_with url: deposit_account_path, local: true do |f| %>
+  <%= label_tag :amount %>
+  <%= number_field_tag :amount, nil, step: 0.01, required: true %>
+  <%= label_tag :memo, "Memo" %>
+  <%= text_field_tag :memo %>
+  <%= submit_tag "Deposit" %>
+<% end %>
+
+<% if flash[:deposit_notice] %>
+  <div style="color: green; font-weight: bold;"><%= flash[:deposit_notice] %></div>
+<% end %>
+
+<h2>Withdraw Funds</h2>
+<%= form_with url: withdraw_account_path, local: true do |f| %>
+  <%= label_tag :amount %>
+  <%= number_field_tag :amount, nil, step: 0.01, required: true %>
+  <%= submit_tag "Withdraw" %>
+<% end %>
+
+<% if flash[:withdraw_notice] %>
+  <div style="color: green; font-weight: bold;"><%= flash[:withdraw_notice] %></div>
+<% end %>
+
+<% if flash[:withdraw_alert] %>
+  <div style="color: red; font-weight: bold;"><%= flash[:withdraw_alert] %></div>
+<% end %>
+
+<h2>Send Money</h2>
+<%= form_with url: send_money_account_path, local: true do |f| %>
+  <%= label_tag :recipient_email, "Recipient Email" %>
+  <%= email_field_tag :recipient_email %>
+  <%= label_tag :amount %>
+  <%= number_field_tag :amount, nil, step: 0.01, required: true %>
+  <%= label_tag :memo, "Memo" %>
+  <%= text_field_tag :memo %>
+  <%= submit_tag "Send" %>
+<% end %>
+
+<% if flash[:transfer_notice] %>
+  <div style="color: green; font-weight: bold;"><%= flash[:transfer_notice] %></div>
+<% end %>
+
+<% if flash[:transfer_alert] %>
+  <div style="color: red; font-weight: bold;"><%= flash[:transfer_alert] %></div>
+<% end %>
+
+<h2>Transaction History</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |t| %>
+      <tr>
+        <td><%= t.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= t.transaction_type.capitalize %></td>
+        <td><%= number_to_currency(t.amount) %></td>
+        <td><%= t.details %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
